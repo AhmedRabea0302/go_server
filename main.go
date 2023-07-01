@@ -30,7 +30,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	address := r.FormValue("address")
 
-	fmt.Fprintf(w, "The name is: %v, and adress is: %v\n", name, address)
+	fmt.Fprintf(w, "The name is: %s, and adress is: %s\n", name, address)
 }
 
 func main() {
@@ -40,7 +40,7 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 
 	fmt.Printf("Starting serve at port: 8000\n")
-	if err := http.ListenAndServe("8000", nil); err != nil {
+	if err := http.ListenAndServe(":8000", nil); err != nil {
 		log.Fatal(err)
 	}
 }
