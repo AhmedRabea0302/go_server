@@ -21,12 +21,21 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func formHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "Failed to parse form %v\n", err.Error())
+		return
+	}
 
+	fmt.Fprintf(w, "Post Request Successfully run\n")
+	name := r.FormValue("name")
+	address := r.FormValue("address")
+
+	fmt.Fprintf(w, "The name is: %v, and adress is: %v\n", name, address)
 }
 
 func main() {
 	fileServer := http.FileServer(http.Dir("./static"))
-	http.HandleFunc("/", fileServer)
+	http.Handle("/", fileServer)
 	http.HandleFunc("/form", formHandler)
 	http.HandleFunc("/hello", helloHandler)
 
